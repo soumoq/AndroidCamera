@@ -4,42 +4,39 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.hardware.Camera;
+import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.VideoView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView imageView;
-    private static final int REQUEST_IMAGE_CAPTURE=101;
+    Camera camera;
+    FrameLayout frameLayout;
+    ShowCamera showCamera;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        imageView=(ImageView)findViewById(R.id.image_view);
 
+        frameLayout=(FrameLayout)findViewById(R.id.frame_layout);
 
+        //open camera
+        camera=Camera.open();
+
+        showCamera=new ShowCamera(this,camera);
+        frameLayout.addView(showCamera);
     }
 
-    public void takePicture(View view)
-    {
-        Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        if(intent.resolveActivity(getPackageManager())!=null)
-        {
-            startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-
-    }
 }
