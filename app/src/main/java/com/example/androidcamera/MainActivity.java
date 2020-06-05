@@ -22,9 +22,11 @@ import android.widget.VideoView;
 
 public class MainActivity extends AppCompatActivity {
 
+
     Camera camera;
     FrameLayout frameLayout;
     ShowCamera showCamera;
+    private int camId=Camera.CameraInfo.CAMERA_FACING_FRONT;
 
     public static final int MY_PERMISSIONS_CAMERA = 1;
 
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         frameLayout = (FrameLayout) findViewById(R.id.frame_layout);
 
         //open camera
-        camera = Camera.open();
+        camera = Camera.open(camId);
 
         showCamera = new ShowCamera(this, camera);
         frameLayout.addView(showCamera);
